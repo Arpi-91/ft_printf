@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ararakel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 15:24:40 by ararakel          #+#    #+#             */
-/*   Updated: 2025/03/12 15:28:21 by ararakel         ###   ########.fr       */
+/*   Created: 2025/04/03 15:58:22 by ararakel          #+#    #+#             */
+/*   Updated: 2025/04/03 15:58:27 by ararakel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,23 @@ size_t	ft_putnbr(int nbr)
 
 	i = 0;
 	if (nbr == -2147483648)
-	{
 		i += write(1, "-2147483648", 11);
-	}
-	if (nbr < 0)
+	else
 	{
-		i += ft_putchar('-');
-		nbr = -nbr;
-	}
-	if (nbr >= 10)
-	{
-		i += ft_putnbr(nbr / 10);
-		nbr = nbr % 10;
-	}
-	if (nbr < 10)
-	{
-		i += ft_putchar(nbr + 48);
+		if (nbr < 0)
+		{
+			i += ft_putchar('-');
+			nbr = -nbr;
+		}
+		if (nbr >= 10)
+		{
+			i += ft_putnbr(nbr / 10);
+			nbr = nbr % 10;
+		}
+		if (nbr < 10)
+		{
+			i += ft_putchar((char)nbr + '0');
+		}
 	}
 	return (i);
 }

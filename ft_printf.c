@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ararakel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 17:27:21 by ararakel          #+#    #+#             */
-/*   Updated: 2025/03/12 17:21:43 by ararakel         ###   ########.fr       */
+/*   Created: 2025/04/03 15:57:42 by ararakel          #+#    #+#             */
+/*   Updated: 2025/04/03 15:57:49 by ararakel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,21 @@
 
 static int	define_format(const char c, va_list args)
 {
-	char	*chr;
 	int		len;
 
 	len = 0;
-	chr = va_arg(args, char *);
 	if (c == 'c')
-		len += ft_putchar((char)chr);
+		len += ft_putchar(va_arg(args, int));
 	else if (c == 's')
-		len += ft_putstr(chr);
+		len += ft_putstr(va_arg(args, char *));
+	else if (c == 'u')
+		len += ft_printf_u(va_arg(args, unsigned int));
+	else if (c == 'i' || c == 'd')
+		len += ft_putnbr(va_arg(args, int));
 	else if (c == 'p')
-	{
-	}
-	else if (c == 'i' || c == 'd' || c == 'u')
-		len += ft_putnbr((int)(chr));
-	/*else if (c == 'x' || c = 'X')
-	{
-		print_format_x(args);
-	}*/
+		len += ft_printf_p(va_arg(args, void *));
+	else if (c == 'x' || c == 'X')
+		len += ft_printf_x(va_arg(args, unsigned int), c);
 	else if (c == '%')
 		len += write(1, "%", 1);
 	return (len);
@@ -39,9 +36,9 @@ static int	define_format(const char c, va_list args)
 
 int	ft_printf(const char *ptr_format, ...)
 {
-	va_list			args;
-	unsigned int	i;
-	int				len;
+	va_list	args;
+	int		i;
+	int		len;
 
 	va_start(args, ptr_format);
 	i = 0;
@@ -62,16 +59,3 @@ int	ft_printf(const char *ptr_format, ...)
 	va_end(args);
 	return (len);
 }
-/*
-int	main(void)
-{
-//	ft_printf("hello ee 1- %s aaa 2-%c e\n","", '1');
-//	printf("%u", 0);
-//	ft_printf("helloee 2-%ciiii",'Z');
-	ft_printf("%d\n", 122);
-	ft_printf(" %s,  %s\n", "","-");
-	//printf("%d",printf(" %d\n", -214748364));
-//	printf("%d", ft_printf(" %d\n", -214748364));
-	print(" %d ", 9223372036854775807LL);
-}
-*/
